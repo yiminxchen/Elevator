@@ -38,19 +38,21 @@ namespace Elevator
             var seq = controlCmd.TakeWhile(
                 c =>
                 {
+                    if (floor == -1)
+                        return false;
                     if (c == '(') floor++;
                     if (c == ')') floor--;
-                    return floor != -1;
-                }).ToArray();
+                    return true;
+                })
+                .ToArray();
 
             if (floor == -1)
             {
-                Console.WriteLine("Reach Basement:");
+                Console.Write("Reach Basement by: ");
                 foreach (var c in seq)
                 {
                     Console.Write($"{c}");
                 }
-                Console.Write($"{controlCmd[seq.Length]}");
             }
             else
             {
